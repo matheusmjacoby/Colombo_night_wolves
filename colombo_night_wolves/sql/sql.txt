@@ -1,0 +1,395 @@
+-- ============================================================
+-- COLOMBO NIGHT WOLVES
+-- Database v1.0
+-- PostgreSQL / Supabase
+-- ============================================================
+
+create extension if not exists "uuid-ossp";
+
+--------------------------------------------------------
+-- ENUMS
+--------------------------------------------------------
+
+create type player_position as enum (
+'Goleiro',
+'Zagueiro',
+'Ala Esquerda',
+'Ala Direita',
+'Meio Campo',
+'Atacante'
+);
+
+create type player_plan as enum (
+'Mensalista',
+'Avulso'
+);
+
+create type team_color as enum (
+'Azul',
+'Branco',
+'Nenhum'
+);
+
+create type payment_status as enum (
+'Pago',
+'Pendente'
+);
+
+create type transaction_type as enum (
+'Entrada',
+'Saida'
+);
+
+--------------------------------------------------------
+-- PERFIS
+--------------------------------------------------------
+
+create table profiles (
+
+id uuid primary key references auth.users(id) on delete cascade,
+
+nome text not null,
+
+apelido text,
+
+email text not null,
+
+telefone text,
+
+idade integer,
+
+posicao player_position,
+
+nota integer default 3,
+
+plano player_plan default 'Mensalista',
+
+mensalidade payment_status default 'Pendente',
+
+is_admin boolean default false,
+
+ativo boolean default true,
+
+foto text,
+
+created_at timestamptz default now()
+
+);
+
+--------------------------------------------------------
+-- PARTIDAS
+--------------------------------------------------------
+
+create table games (
+
+id uuid primary key default uuid_generate_v4(),
+
+data_jogo date not null,
+
+hora time,
+
+local text,
+
+status text default 'Aberto',
+
+observacao text,
+
+created_at timestamptz default now()
+
+);
+
+--------------------------------------------------------
+-- PRESENÇAS
+--------------------------------------------------------
+
+create table attendance (
+
+id uuid primary key default uuid_generate_v4(),
+
+game_id uuid references games(id) on delete cascade,
+
+player_id uuid references profiles(id) on delete cascade,
+
+confirmado boolean default false,
+
+time team_color default 'Nenhum',
+
+created_at timestamptz default now(),
+
+unique(game_id,player_id)
+
+);
+
+--------------------------------------------------------
+-- PAGAMENTOS
+--------------------------------------------------------
+
+create table payments (
+
+id uuid primary key default uuid_generate_v4(),
+
+player_id uuid references profiles(id),
+
+valor numeric(10,2),
+
+referencia date,
+
+forma_pagamento text,
+
+observacao text,
+
+created_at timestamptz default now()
+
+);
+
+--------------------------------------------------------
+-- CAIXA
+--------------------------------------------------------
+
+create table cash_transactions (
+
+id uuid primary key default uuid_generate_v4(),
+
+tipo transaction_type,
+
+descricao text,
+
+valor numeric(10,2),
+
+created_by uuid references profiles(id),
+
+created_at timestamptz default now()
+
+);
+
+--------------------------------------------------------
+-- CONFIGURAÇÕES
+--------------------------------------------------------
+
+create table settings (
+
+id integer primary key,
+
+nome_time text,
+
+valor_mensalidade numeric(10,2),
+
+valor_avulso numeric(10,2),
+
+pix text,
+
+logo text
+
+);
+
+insert into settings values (
+
+1,
+
+'Colombo Night Wolves',
+
+85,
+
+25,
+
+'',
+
+''
+
+);
+
+--------------------------------------------------------
+-- VIEW DO CAIXA
+--------------------------------------------------------
+
+create view caixa as
+
+select
+
+coalesce(
+
+sum(
+
+case
+
+when tipo='Entrada'
+
+then valor
+
+else -valor
+
+end
+
+),0
+
+as saldo
+
+from cash_transactions;
+
+--------------------------------------------------------
+-- RLS
+--------------------------------------------------------
+
+alter table profiles enable row level security;
+
+alter table games enable row level security;
+
+alter table attendance enable row level security;
+
+alter table payments enable row level security;
+
+alter table cash_transactions enable row level security;
+
+alter table settings enable row level security;
+
+--------------------------------------------------------
+-- POLÍTICAS
+--------------------------------------------------------
+
+create policy "Authenticated users can read profiles"
+
+on profiles
+
+for select
+
+to authenticated
+
+using (true);
+
+create policy "User updates own profile"
+
+on profiles
+
+for update
+
+to authenticated
+
+using (auth.uid()=id);
+
+create policy "Admins full access"
+
+on profiles
+
+for all
+
+to authenticated
+
+using (
+
+exists(
+
+select 1
+
+from profiles p
+
+where
+
+p.id=auth.uid()
+
+and p.is_admin=true
+
+)
+
+);
+
+--------------------------------------------------------
+-- SETTINGS
+--------------------------------------------------------
+
+create policy "Read settings"
+
+on settings
+
+for select
+
+to authenticated
+
+using (true);
+
+--------------------------------------------------------
+-- GAMES
+--------------------------------------------------------
+
+create policy "Read games"
+
+on games
+
+for select
+
+to authenticated
+
+using (true);
+
+--------------------------------------------------------
+-- ATTENDANCE
+--------------------------------------------------------
+
+create policy "Read attendance"
+
+on attendance
+
+for select
+
+to authenticated
+
+using (true);
+
+create policy "Insert own attendance"
+
+on attendance
+
+for insert
+
+to authenticated
+
+with check (
+
+player_id=auth.uid()
+
+);
+
+create policy "Update own attendance"
+
+on attendance
+
+for update
+
+to authenticated
+
+using (
+
+player_id=auth.uid()
+
+);
+
+--------------------------------------------------------
+-- PAYMENTS
+--------------------------------------------------------
+
+create policy "Read own payments"
+
+on payments
+
+for select
+
+to authenticated
+
+using (
+
+player_id=auth.uid()
+
+);
+
+--------------------------------------------------------
+-- CAIXA
+--------------------------------------------------------
+
+create policy "Read cash"
+
+on cash_transactions
+
+for select
+
+to authenticated
+
+using (true);

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Colombo Night Wolves</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="stylesheet" href="css/login.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+
+<div class="login-container">
+
+<div class="login-card">
+
+<h1>🐺</h1>
+
+<h2>Colombo Night Wolves</h2>
+
+<p>Área do Jogador</p>
+
+<input
+id="email"
+type="email"
+placeholder="E-mail">
+
+<input
+id="password"
+type="password"
+placeholder="Senha">
+
+<button id="btnLogin">
+
+Entrar
+
+</button>
+
+<p>
+
+<a href="#"
+
+id="forgot">
+
+Esqueci minha senha
+
+</a>
+
+</p>
+
+<div id="message"></div>
+
+</div>
+
+</div>
+
+<script src="js/config.js"></script>
+
+<script src="js/api.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script>
+
+const btn=document.getElementById("btnLogin");
+
+btn.onclick=async()=>{
+
+const email=document.getElementById("email").value;
+
+const password=document.getElementById("password").value;
+
+const msg=document.getElementById("message");
+
+msg.innerHTML="";
+
+try{
+
+await Auth.login(email,password);
+
+window.location="dashboard.html";
+
+}catch(e){
+
+msg.innerHTML=e.message;
+
+}
+
+};
+
+document
+.getElementById("forgot")
+.onclick=async()=>{
+
+const email=document
+.getElementById("email")
+.value;
+
+if(email===""){
+
+alert("Informe o e-mail.");
+
+return;
+
+}
+
+try{
+
+await Auth.recoverPassword(email);
+
+alert("Confira sua caixa de entrada.");
+
+}catch(e){
+
+alert(e.message);
+
+}
+
+};
+
+</script>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</html>

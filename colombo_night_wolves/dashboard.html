@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Dashboard</title>
+
+<link rel="stylesheet"
+href="css/style.css">
+
+<link rel="stylesheet"
+href="css/dashboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+
+<header>
+
+<h2>
+
+🐺 Colombo Night Wolves
+
+</h2>
+
+<button onclick="logout()">
+
+Sair
+
+</button>
+
+</header>
+
+<main>
+
+<section class="card">
+
+<h3>
+
+Meu Perfil
+
+</h3>
+
+<p>
+
+<strong>Nome:</strong>
+
+<span id="nome"></span>
+
+</p>
+
+<p>
+
+<strong>Posição:</strong>
+
+<span id="posicao"></span>
+
+</p>
+
+<p>
+
+<strong>Plano:</strong>
+
+<span id="plano"></span>
+
+</p>
+
+<p>
+
+<strong>Mensalidade:</strong>
+
+<span id="mensalidade"></span>
+
+</p>
+
+</section>
+
+<section class="card">
+
+<h3>
+
+Próximo jogo
+
+</h3>
+
+<p id="jogo"></p>
+
+<button id="confirmar">
+
+Confirmar presença
+
+</button>
+
+<button id="recusar">
+
+Não vou
+
+</button>
+
+</section>
+
+<section class="card">
+
+<h3>
+
+Saldo do Caixa
+
+</h3>
+
+<h1>
+
+R$
+
+<span id="saldo"></span>
+
+</h1>
+
+</section>
+
+</main>
+
+<script src="js/config.js"></script>
+
+<script src="js/api.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/session.js"></script>
+
+<script>
+
+(async()=>{
+
+await loadSession();
+
+nome.innerHTML=currentProfile.nome;
+
+posicao.innerHTML=currentProfile.posicao;
+
+plano.innerHTML=currentProfile.plano;
+
+mensalidade.innerHTML=currentProfile.mensalidade;
+
+const game=await API.getCurrentGame();
+
+if(game){
+
+jogo.innerHTML=
+
+`${game.data_jogo} às ${game.hora}`;
+
+confirmar.onclick=async()=>{
+
+await API.confirmAttendance(game.id,true);
+
+alert("Presença confirmada.");
+
+};
+
+recusar.onclick=async()=>{
+
+await API.confirmAttendance(game.id,false);
+
+alert("Presença registrada.");
+
+};
+
+}else{
+
+jogo.innerHTML="Nenhuma partida aberta.";
+
+confirmar.disabled=true;
+
+recusar.disabled=true;
+
+}
+
+const caixa=await API.getCashBalance();
+
+saldo.innerHTML=
+
+Number(caixa.saldo)
+
+.toLocaleString(
+
+"pt-BR",
+
+{
+
+minimumFractionDigits:2
+
+}
+
+);
+
+})();
+
+</script>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+
+</html>

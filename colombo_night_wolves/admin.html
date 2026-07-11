@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Painel Administrativo</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+<h1>⚙️ Colombo Night Wolves</h1>
+
+<div>
+
+<button id="btnDashboard">Dashboard</button>
+
+<button id="btnLogout">Sair</button>
+
+</div>
+
+</header>
+
+<div class="container">
+
+<div class="menu">
+
+<button class="menu-btn active" data-tab="players">
+Jogadores
+</button>
+
+<button class="menu-btn" data-tab="games">
+Jogos
+</button>
+
+<button class="menu-btn" data-tab="attendance">
+Presenças
+</button>
+
+<button class="menu-btn" data-tab="finance">
+Financeiro
+</button>
+
+</div>
+
+<section id="players" class="tab active">
+
+<div class="card">
+
+<h2>Jogadores</h2>
+
+<button id="novoJogador" class="btn">
+
+Novo Jogador
+
+</button>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Nome</th>
+
+<th>Posição</th>
+
+<th>Plano</th>
+
+<th>Status</th>
+
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody id="playersTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section id="games" class="tab">
+
+<div class="card">
+
+<h2>Partidas</h2>
+
+<button class="btn" id="novoJogo">
+
+Nova Rodada
+
+</button>
+
+<div id="gamesList"></div>
+
+</div>
+
+</section>
+
+<section id="attendance" class="tab">
+
+<div class="card">
+
+<h2>Confirmados</h2>
+
+<div id="attendanceList">
+
+Carregando...
+
+</div>
+
+</div>
+
+</section>
+
+<section id="finance" class="tab">
+
+<div class="card">
+
+<h2>Financeiro</h2>
+
+<div id="financeList">
+
+Carregando...
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/session.js"></script>
+<script src="js/admin.js"></script>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</html>
