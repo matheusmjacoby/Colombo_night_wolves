@@ -2,55 +2,41 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Painel Administrativo</title>
-
+<title>Admin - Colombo Night Wolves</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/admin.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body>
 
-<header class="admin-header">
-
+<header class="header">
+<div class="header-content">
 <h1>⚙️ Colombo Night Wolves</h1>
-
-<div>
-
-<button id="btnDashboard">Dashboard</button>
-
-<button id="btnLogout">Sair</button>
-
+<nav class="nav">
+<a href="dashboard.html">Dashboard</a>
+<a href="jogadores.html">Jogadores</a>
+<a href="partidas.html">Partidas</a>
+<a href="ranking.html">Ranking</a>
+<a href="admin.html" class="active">Admin</a>
+<button onclick="logout()">Sair</button>
+</nav>
 </div>
-
 </header>
 
 <div class="container">
 
 <div class="menu">
 
-<button class="menu-btn active" data-tab="players">
-Jogadores
-</button>
+<button class="menu-btn active" data-tab="players">Jogadores</button>
 
-<button class="menu-btn" data-tab="games">
-Jogos
-</button>
+<button class="menu-btn" data-tab="games">Partidas</button>
 
-<button class="menu-btn" data-tab="attendance">
-Presenças
-</button>
+<button class="menu-btn" data-tab="attendance">Presenças</button>
 
-<button class="menu-btn" data-tab="finance">
-Financeiro
-</button>
+<button class="menu-btn" data-tab="finance">Financeiro</button>
 
 </div>
 
@@ -60,11 +46,7 @@ Financeiro
 
 <h2>Jogadores</h2>
 
-<button id="novoJogador" class="btn">
-
-Novo Jogador
-
-</button>
+<button id="novoJogador" class="btn">Novo Jogador</button>
 
 <table>
 
@@ -102,11 +84,7 @@ Novo Jogador
 
 <h2>Partidas</h2>
 
-<button class="btn" id="novoJogo">
-
-Nova Rodada
-
-</button>
+<button class="btn" id="novoJogo">Nova Partida</button>
 
 <div id="gamesList"></div>
 
@@ -120,11 +98,7 @@ Nova Rodada
 
 <h2>Confirmados</h2>
 
-<div id="attendanceList">
-
-Carregando...
-
-</div>
+<div id="attendanceList">Carregando...</div>
 
 </div>
 
@@ -136,11 +110,7 @@ Carregando...
 
 <h2>Financeiro</h2>
 
-<div id="financeList">
-
-Carregando...
-
-</div>
+<div id="financeList">Carregando...</div>
 
 </div>
 
@@ -156,8 +126,4 @@ Carregando...
 
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script src="js/config.js"></script>
-<script src="js/auth.js"></script>
 </html>

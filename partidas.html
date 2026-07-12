@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Partidas - Colombo Night Wolves</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/partidas.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header class="header">
+<div class="header-content">
+<h1>🐺 Colombo Night Wolves</h1>
+<nav class="nav">
+<a href="dashboard.html">Dashboard</a>
+<a href="jogadores.html">Jogadores</a>
+<a href="partidas.html" class="active">Partidas</a>
+<a href="ranking.html">Ranking</a>
+<a href="admin.html">Admin</a>
+<button onclick="logout()">Sair</button>
+</nav>
+</div>
+</header>
+
+<main class="container">
+
+<div class="page-header">
+<h2>Histórico de Partidas</h2>
+<button id="novaPartida" class="btn btn-primary">+ Nova Partida</button>
+</div>
+
+<div id="filtros" class="filtros">
+<input type="text" id="searchAdversario" placeholder="Buscar adversário..." class="search">
+<select id="filterAno" class="filter">
+<option value="">Todos os anos</option>
+<option value="2024">2024</option>
+<option value="2025">2025</option>
+<option value="2026">2026</option>
+</select>
+</div>
+
+<div id="partidasList" class="partidas-list">
+<!-- Preenchido por JS -->
+</div>
+
+</main>
+
+<!-- Modal Nova Partida -->
+<div id="modalPartida" class="modal">
+<div class="modal-content">
+<span class="close" onclick="fecharModal()">&times;</span>
+<h3>Registrar Partida</h3>
+<form id="formPartida">
+<input type="date" id="inputDataJogo" required>
+<input type="time" id="inputHora">
+<input type="text" id="inputAdversario" placeholder="Adversário" required>
+<input type="text" id="inputLocal" placeholder="Local da partida">
+<input type="number" id="inputGolosCN" placeholder="Gols Colombo" min="0">
+<input type="number" id="inputGolosAdv" placeholder="Gols Adversário" min="0">
+<textarea id="inputObservacao" placeholder="Observações da partida..."></textarea>
+<button type="submit" class="btn btn-primary">Salvar Partida</button>
+</form>
+</div>
+</div>
+
+<!-- Modal Estatísticas da Partida -->
+<div id="modalEstatisticas" class="modal">
+<div class="modal-content">
+<span class="close" onclick="fecharModal()">&times;</span>
+<h3>Estatísticas da Partida</h3>
+<div id="estatisticasContent">
+<!-- Preenchido por JS -->
+</div>
+</div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/session.js"></script>
+<script src="js/partidas.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+.page-header{
+margin:30px 0;
+}
+
+.page-header h2{
+font-size:28px;
+}
+
+.rankings-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(400px,1fr));
+gap:25px;
+margin-top:30px;
+}
+
+.ranking-card{
+background:var(--card);
+border-radius:12px;
+padding:25px;
+border:1px solid var(--border);
+transition:transform 0.3s, box-shadow 0.3s;
+}
+
+.ranking-card:hover{
+transform:translateY(-5px);
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+}
+
+.ranking-card h3{
+font-size:18px;
+margin-bottom:20px;
+padding-bottom:15px;
+border-bottom:2px solid var(--accent);
+}
+
+.ranking-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.ranking-table thead{
+background:#0f172a;
+}
+
+.ranking-table th{
+padding:12px 10px;
+text-align:left;
+font-size:12px;
+font-weight:600;
+text-transform:uppercase;
+color:var(--accent);
+}
+
+.ranking-table td{
+padding:12px 10px;
+border-bottom:1px solid var(--border);
+font-size:14px;
+}
+
+.ranking-table tbody tr{
+transition:background 0.2s;
+}
+
+.ranking-table tbody tr:hover{
+background:#0f172a;
+}
+
+.ranking-table tbody tr:nth-child(1) td:first-child::before{
+content:"🥇 ";
+}
+
+.ranking-table tbody tr:nth-child(2) td:first-child::before{
+content:"🥈 ";
+}
+
+.ranking-table tbody tr:nth-child(3) td:first-child::before{
+content:"🥉 ";
+}
+
+.ranking-table tbody tr:nth-child(n+4) td:first-child::before{
+content:"";
+}
+
+.ranking-posicao{
+font-weight:bold;
+color:var(--accent);
+}
+
+.ranking-numero{
+font-weight:bold;
+color:#22c55e;
+font-size:16px;
+}
+
+.ranking-nome{
+font-weight:500;
+}
+
+.ranking-partidas{
+color:var(--text2);
+font-size:12px;
+}
+
+@media(max-width:1024px){
+.rankings-container{
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:20px;
+}
+}
+
+@media(max-width:768px){
+.rankings-container{
+grid-template-columns:1fr;
+}
+
+.ranking-table{
+font-size:12px;
+}
+
+.ranking-table th,
+.ranking-table td{
+padding:8px 6px;
+}
+
+.page-header h2{
+font-size:22px;
+}
+}

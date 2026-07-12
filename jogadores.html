@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jogadores - Colombo Night Wolves</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/jogadores.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header class="header">
+<div class="header-content">
+<h1>🐺 Colombo Night Wolves</h1>
+<nav class="nav">
+<a href="dashboard.html">Dashboard</a>
+<a href="jogadores.html" class="active">Jogadores</a>
+<a href="partidas.html">Partidas</a>
+<a href="ranking.html">Ranking</a>
+<a href="admin.html">Admin</a>
+<button onclick="logout()">Sair</button>
+</nav>
+</div>
+</header>
+
+<main class="container">
+
+<div class="page-header">
+<h2>Jogadores do Time</h2>
+<button id="novoJogador" class="btn btn-primary">+ Novo Jogador</button>
+</div>
+
+<div id="filtros" class="filtros">
+<input type="text" id="searchJogador" placeholder="Buscar jogador..." class="search">
+<select id="filterPosicao" class="filter">
+<option value="">Todas as posições</option>
+<option value="Goleiro">Goleiro</option>
+<option value="Zagueiro">Zagueiro</option>
+<option value="Ala Esquerda">Ala Esquerda</option>
+<option value="Ala Direita">Ala Direita</option>
+<option value="Meio Campo">Meio Campo</option>
+<option value="Atacante">Atacante</option>
+</select>
+<select id="filterStatus" class="filter">
+<option value="">Todos os status</option>
+<option value="true">Ativos</option>
+<option value="false">Inativos</option>
+</select>
+</div>
+
+<div id="jogadoresGrid" class="jogadores-grid">
+<!-- Preenchido por JS -->
+</div>
+
+</main>
+
+<!-- Modal de Novo Jogador -->
+<div id="modalJogador" class="modal">
+<div class="modal-content">
+<span class="close" onclick="fecharModal()">&times;</span>
+<h3>Adicionar Jogador</h3>
+<form id="formJogador">
+<input type="text" id="inputNome" placeholder="Nome completo" required>
+<input type="text" id="inputApelido" placeholder="Apelido">
+<select id="inputPosicao" required>
+<option value="">Selecione a posição</option>
+<option value="Goleiro">Goleiro</option>
+<option value="Zagueiro">Zagueiro</option>
+<option value="Ala Esquerda">Ala Esquerda</option>
+<option value="Ala Direita">Ala Direita</option>
+<option value="Meio Campo">Meio Campo</option>
+<option value="Atacante">Atacante</option>
+</select>
+<input type="number" id="inputNumero" placeholder="Número da camisa (1-99)" min="1" max="99">
+<input type="email" id="inputEmail" placeholder="E-mail">
+<input type="tel" id="inputTelefone" placeholder="Telefone">
+<select id="inputPlano" required>
+<option value="Mensalista">Mensalista</option>
+<option value="Avulso">Avulso</option>
+</select>
+<button type="submit" class="btn btn-primary">Salvar Jogador</button>
+</form>
+</div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/session.js"></script>
+<script src="js/jogadores.js"></script>
+
+</body>
+
+</html>

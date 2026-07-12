@@ -2,20 +2,12 @@
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width,initial-scale=1">
-
-<title>Colombo Night Wolves</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Colombo Night Wolves - Login</title>
 <link rel="stylesheet" href="css/style.css">
-
 <link rel="stylesheet" href="css/login.css">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body>
@@ -30,32 +22,14 @@ content="width=device-width,initial-scale=1">
 
 <p>Área do Jogador</p>
 
-<input
-id="email"
-type="email"
-placeholder="E-mail">
+<input id="email" type="email" placeholder="E-mail">
 
-<input
-id="password"
-type="password"
-placeholder="Senha">
+<input id="password" type="password" placeholder="Senha">
 
-<button id="btnLogin">
-
-Entrar
-
-</button>
+<button id="btnLogin">Entrar</button>
 
 <p>
-
-<a href="#"
-
-id="forgot">
-
-Esqueci minha senha
-
-</a>
-
+<a href="#" id="forgot">Esqueci minha senha</a>
 </p>
 
 <div id="message"></div>
@@ -65,75 +39,60 @@ Esqueci minha senha
 </div>
 
 <script src="js/config.js"></script>
-
 <script src="js/api.js"></script>
-
 <script src="js/auth.js"></script>
 
 <script>
 
-const btn=document.getElementById("btnLogin");
+const btn = document.getElementById("btnLogin");
 
-btn.onclick=async()=>{
+btn.onclick = async () => {
 
-const email=document.getElementById("email").value;
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+const msg = document.getElementById("message");
 
-const password=document.getElementById("password").value;
+msg.innerHTML = "";
 
-const msg=document.getElementById("message");
+try {
 
-msg.innerHTML="";
+await Auth.login(email, password);
+window.location = "dashboard.html";
 
-try{
+} catch(e) {
 
-await Auth.login(email,password);
-
-window.location="dashboard.html";
-
-}catch(e){
-
-msg.innerHTML=e.message;
+msg.innerHTML = "❌ " + e.message;
 
 }
 
 };
 
-document
-.getElementById("forgot")
-.onclick=async()=>{
+document.getElementById("forgot").onclick = async () => {
 
-const email=document
-.getElementById("email")
-.value;
+const email = document.getElementById("email").value;
 
-if(email===""){
+if(email === "") {
 
 alert("Informe o e-mail.");
-
 return;
 
 }
 
-try{
+try {
 
 await Auth.recoverPassword(email);
+alert("✓ Confira sua caixa de entrada.");
 
-alert("Confira sua caixa de entrada.");
+} catch(e) {
 
-}catch(e){
-
-alert(e.message);
+alert("❌ " + e.message);
 
 }
 
 };
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="js/config.js"></script>
-<script src="js/auth.js"></script>
 </body>
-
 
 </html>
